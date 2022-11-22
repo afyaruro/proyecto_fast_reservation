@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "565223568929",
+    "project_id": "proyecto-fast-reservation",
+    "storage_bucket": "proyecto-fast-reservation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565223568929:android:8dd7e04c4fd8ace6f59560",
+        "android_client_info": {
+          "package_name": "com.example.proyecto_fast_reservation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565223568929-34rcp47ke40stfuu8s5njb41asguqv67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm_53W5G12D7-GXYSgrk73eDX1jVxkuew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565223568929-34rcp47ke40stfuu8s5njb41asguqv67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

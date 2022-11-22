@@ -7,10 +7,10 @@ class InicioAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerAdmin(),
+      //  drawer: DrawerAdmin(),
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        //  centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {

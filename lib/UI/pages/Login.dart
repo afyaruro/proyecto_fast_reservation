@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:proyecto_fast_reservation/UI/CustomPainter/painterLogin.dart';
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class Login extends StatelessWidget {
@@ -71,7 +70,7 @@ class Login extends StatelessWidget {
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
                   decoration: InputDecoration(
-                    labelText: 'Nombre de Usuario',
+                    labelText: 'User Name',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),
@@ -86,7 +85,7 @@ class Login extends StatelessWidget {
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Contraseña',
+                    labelText: 'Password',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),
