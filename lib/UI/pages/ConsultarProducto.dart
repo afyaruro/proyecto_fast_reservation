@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Controller/ControlProducto.dart';
 
-import '../../Controller/ControlFirebaseMesas.dart';
-
-class ConsultaMesa extends StatefulWidget {
-  ConsultaMesa({Key? key}) : super(key: key);
+class ConsultaProducto extends StatefulWidget {
+  ConsultaProducto({Key? key}) : super(key: key);
 
   @override
-  State<ConsultaMesa> createState() => _ConsultaMesaState();
+  State<ConsultaProducto> createState() => _ConsultaProductoState();
 }
 
-class _ConsultaMesaState extends State<ConsultaMesa> {
+class _ConsultaProductoState extends State<ConsultaProducto> {
   var _image;
-  TextEditingController controlIdMesa = TextEditingController();
-  MesaController controlMesa = Get.find();
+  ProductoController controlProducto = Get.find();
   TextEditingController tex = TextEditingController();
   String mensaje = "";
 
   String LLamarImagen() {
-    if (controlMesa.imagenMesa == "") {
+    if (controlProducto.imagenProducto == "") {
       _image =
           "https://farm5.staticflickr.com/4363/36346283311_74018f6e7d_o.png";
     } else {
-      _image = controlMesa.imagenMesa;
+      _image = controlProducto.imagenProducto;
     }
 
-    tex.text = controlMesa.descripcionMesa;
+    tex.text = controlProducto.descripcionProducto;
+
     return _image;
   }
 
@@ -34,7 +33,7 @@ class _ConsultaMesaState extends State<ConsultaMesa> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Consultar Mesa"),
+        title: const Text("Consultar Producto"),
         backgroundColor: const Color(0xFF005E80),
       ),
       body: Container(
@@ -69,7 +68,7 @@ class _ConsultaMesaState extends State<ConsultaMesa> {
                 child: TextField(
                   enabled: false,
                   decoration: InputDecoration(
-                    labelText: controlMesa.idMesa,
+                    labelText: controlProducto.idProducto,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),
@@ -93,7 +92,31 @@ class _ConsultaMesaState extends State<ConsultaMesa> {
                 child: TextField(
                   enabled: false,
                   decoration: InputDecoration(
-                    labelText: controlMesa.nombreMesa,
+                    labelText: controlProducto.nombreProducto,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+              height: 10,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, bottom: 10),
+              child: const Text(
+                "Precio Producto:",
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            Obx(
+              () => Container(
+                margin: const EdgeInsets.only(right: 20.0, left: 20.0),
+                child: TextField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    labelText: controlProducto.precioProducto,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),

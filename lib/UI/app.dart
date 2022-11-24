@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_fast_reservation/UI/pages/ConsultarMesa.dart';
+import 'package:proyecto_fast_reservation/UI/pages/ConsultarProducto.dart';
 import 'package:proyecto_fast_reservation/UI/pages/GestionarMesas.dart';
 import 'package:proyecto_fast_reservation/UI/pages/GestionarMeseros.dart';
 import 'package:proyecto_fast_reservation/UI/pages/GestionarProductos.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/gestionarMeseros': (context) => GestionarMeseros(),
         '/inicioAdmin': (context) => InicioAdmin(),
         '/consultaMesa': (context) => ConsultaMesa(),
+        '/consultaProducto': (context) => ConsultaProducto(),
       },
     );
   }

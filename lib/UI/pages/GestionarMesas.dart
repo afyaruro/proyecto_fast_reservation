@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_fast_reservation/Controller/ControlFirebaseMesas.dart';
 import 'dart:io';
 import 'package:proyecto_fast_reservation/Data/Service/PeticionesMesas.dart';
+import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaMesa.dart';
 
 import '../../domain/models/mesa.dart';
 
@@ -24,6 +25,7 @@ class _GestionarMesasState extends State<GestionarMesas> {
   TextEditingController controlDescripcion = TextEditingController();
   MesaController controlMesa = Get.find();
   String mensaje = "";
+  final RespuestaMesa respuesta = RespuestaMesa();
 
   _camGaleria(bool op) async {
     XFile? image;
@@ -134,7 +136,6 @@ class _GestionarMesasState extends State<GestionarMesas> {
               width: 20,
               height: 20,
             ),
-            Obx(() => Text('${controlMesa.imagenMesa}')),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -144,64 +145,11 @@ class _GestionarMesasState extends State<GestionarMesas> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          if (controlIdMesa.text == "" ||
-                              controlNombreMesa.text == "" ||
-                              controlDescripcion.text == "") {
-                            Get.showSnackbar(const GetSnackBar(
-                              title: 'Error',
-                              message:
-                                  "Error: Campos Vacios por favor llenarlos todos",
-                              icon: Icon(
-                                Icons.error,
-                                color: Color.fromARGB(255, 187, 2, 2),
-                              ),
-                              duration: Duration(seconds: 2),
-                              backgroundColor: Color.fromARGB(150, 0, 94, 128),
-                            ));
-                          } else {
-                            List<Mesa> lista =
-                                await PeticionesMesa.consultarGral();
-                            this.mensaje = "";
-                            for (var mesa in lista) {
-                              if (mesa.idMesa == controlIdMesa.text) {
-                                Get.showSnackbar(const GetSnackBar(
-                                  title: 'Error',
-                                  message:
-                                      "Error: La Mesa con la identificacion ya se encuentra registrada",
-                                  icon: Icon(
-                                    Icons.error,
-                                    color: Color.fromARGB(255, 187, 2, 2),
-                                  ),
-                                  duration: Duration(seconds: 1),
-                                  backgroundColor:
-                                      Color.fromARGB(150, 0, 94, 128),
-                                ));
-                                this.mensaje = "Encontrada";
-                              }
-                            }
-
-                            if (mensaje != "Encontrada") {
-                              var catalogo = <String, dynamic>{
-                                'idMesa': controlIdMesa.text,
-                                'nombreMesa': controlNombreMesa.text,
-                                'descripcionMesa': controlDescripcion.text,
-                                'foto': ''
-                              };
-
-                              PeticionesMesa.crearMesa(catalogo, _image);
-                              Get.showSnackbar(const GetSnackBar(
-                                title: 'Creación Mesa',
-                                message: 'Mesa creada correctamente',
-                                icon: Icon(
-                                  Icons.beenhere,
-                                  color: Colors.lime,
-                                ),
-                                duration: Duration(seconds: 2),
-                                backgroundColor:
-                                    Color.fromARGB(150, 0, 94, 128),
-                              ));
-                            }
-                          }
+                          respuesta.RespuestaAdd(
+                              controlIdMesa.text,
+                              controlNombreMesa.text,
+                              controlDescripcion.text,
+                              _image);
                         },
                         icon: Icon(Icons.add),
                         color: Colors.white,
@@ -212,7 +160,13 @@ class _GestionarMesasState extends State<GestionarMesas> {
                   child: CircleAvatar(
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          respuesta.RespuestaActualizar(
+                              controlIdMesa.text,
+                              controlNombreMesa.text,
+                              controlDescripcion.text,
+                              _image);
+                        },
                         icon: Icon(Icons.create_rounded),
                         color: Colors.white,
                       )),
@@ -222,11 +176,9 @@ class _GestionarMesasState extends State<GestionarMesas> {
                   child: CircleAvatar(
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
-                        onPressed: () {
-                          controlMesa.consultaMesa(controlIdMesa.text);
-
-                          Get.toNamed('/consultaMesa');
-                          //Navigator.pushNamed(context, '/consultaMesa');
+                        onPressed: () async {
+                          respuesta.RespuestaConsultarxId(
+                              controlIdMesa.text, controlMesa);
                         },
                         icon: Icon(Icons.search),
                         color: Colors.white,
@@ -237,7 +189,9 @@ class _GestionarMesasState extends State<GestionarMesas> {
                   child: CircleAvatar(
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          respuesta.RespuestaDelete(controlIdMesa.text);
+                        },
                         icon: Icon(Icons.delete),
                         color: Colors.white,
                       )),
