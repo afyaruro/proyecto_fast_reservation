@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controller/ControlFirebaseMesas.dart';
+import '../../../../Controller/ControlFirebaseMesas.dart';
 
 class ConsultaMesa extends StatefulWidget {
   ConsultaMesa({Key? key}) : super(key: key);

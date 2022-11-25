@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaProducto.dart';
+import 'package:proyecto_fast_reservation/Controller/ControlFirebaseMesas.dart';
 import 'dart:io';
+import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaMesa.dart';
 
-import '../../Controller/ControlProducto.dart';
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class GestionarProductos extends StatefulWidget {
-  GestionarProductos({Key? key}) : super(key: key);
+class GestionarMesas extends StatefulWidget {
+  const GestionarMesas({Key? key}) : super(key: key);
 
   @override
-  State<GestionarProductos> createState() => _GestionarProductosState();
+  State<GestionarMesas> createState() => _GestionarMesasState();
 }
 
-class _GestionarProductosState extends State<GestionarProductos> {
+class _GestionarMesasState extends State<GestionarMesas> {
   var _image;
   ImagePicker picker = ImagePicker();
-  TextEditingController controlIdProducto = TextEditingController();
-  TextEditingController controlNombreProducto = TextEditingController();
-  TextEditingController controlDescripcionProducto = TextEditingController();
-  TextEditingController controlPrecio = TextEditingController();
-  final RespuestaProducto respuesta = RespuestaProducto();
-
-  ProductoController controlProducto = Get.find();
+  TextEditingController controlIdMesa = TextEditingController();
+  TextEditingController controlNombreMesa = TextEditingController();
+  TextEditingController controlDescripcion = TextEditingController();
+  MesaController controlMesa = Get.find();
   String mensaje = "";
+  final RespuestaMesa respuesta = RespuestaMesa();
 
   _camGaleria(bool op) async {
     XFile? image;
     image = op
         ? await picker.pickImage(source: ImageSource.camera, imageQuality: 50)
         : await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
     setState(() {
       _image = (image != null) ? File(image.path) : null;
     });
@@ -41,7 +40,7 @@ class _GestionarProductosState extends State<GestionarProductos> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Gestionar Productos"),
+        title: const Text("Gestionar Mesas"),
         backgroundColor: const Color(0xFF005E80),
       ),
       body: Container(
@@ -92,9 +91,9 @@ class _GestionarProductosState extends State<GestionarProductos> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlIdProducto,
+                controller: controlIdMesa,
                 decoration: InputDecoration(
-                  labelText: 'Id del Producto',
+                  labelText: 'Id de la Mesa',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -107,9 +106,9 @@ class _GestionarProductosState extends State<GestionarProductos> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlNombreProducto,
+                controller: controlNombreMesa,
                 decoration: InputDecoration(
-                  labelText: 'Nombre del Producto',
+                  labelText: 'Nombre de la Mesa',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -122,10 +121,9 @@ class _GestionarProductosState extends State<GestionarProductos> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlPrecio,
-                //keyboardType: TextInputType.numberWithOptions(decimal: true),
+                controller: controlDescripcion,
                 decoration: InputDecoration(
-                  labelText: 'Precio del Producto',
+                  labelText: 'Descripcion de la Mesa',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -133,22 +131,7 @@ class _GestionarProductosState extends State<GestionarProductos> {
             ),
             SizedBox(
               width: 20,
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 20.0, left: 20.0),
-              child: TextField(
-                controller: controlDescripcionProducto,
-                decoration: InputDecoration(
-                  labelText: 'Descripcion del Producto',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 20,
-              height: 50,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -160,10 +143,9 @@ class _GestionarProductosState extends State<GestionarProductos> {
                       child: IconButton(
                         onPressed: () async {
                           respuesta.RespuestaAdd(
-                              controlIdProducto.text,
-                              controlDescripcionProducto.text,
-                              controlNombreProducto.text,
-                              controlPrecio.text,
+                              controlIdMesa.text,
+                              controlNombreMesa.text,
+                              controlDescripcion.text,
                               _image);
                         },
                         icon: Icon(Icons.add),
@@ -176,11 +158,10 @@ class _GestionarProductosState extends State<GestionarProductos> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaModificar(
-                              controlIdProducto.text,
-                              controlDescripcionProducto.text,
-                              controlNombreProducto.text,
-                              controlPrecio.text,
+                          respuesta.RespuestaActualizar(
+                              controlIdMesa.text,
+                              controlNombreMesa.text,
+                              controlDescripcion.text,
                               _image);
                         },
                         icon: Icon(Icons.create_rounded),
@@ -193,8 +174,8 @@ class _GestionarProductosState extends State<GestionarProductos> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaBusquedaxId(
-                              controlIdProducto.text, controlProducto);
+                          respuesta.RespuestaConsultarxId(
+                              controlIdMesa.text, controlMesa);
                         },
                         icon: Icon(Icons.search),
                         color: Colors.white,
@@ -206,7 +187,7 @@ class _GestionarProductosState extends State<GestionarProductos> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaDelete(controlIdProducto.text);
+                          respuesta.RespuestaDelete(controlIdMesa.text);
                         },
                         icon: Icon(Icons.delete),
                         color: Colors.white,
@@ -223,6 +204,8 @@ class _GestionarProductosState extends State<GestionarProductos> {
       ),
     );
   }
+
+//Seleccionar la camara o la galeria
 
   void _opcioncamara(context) {
     showModalBottomSheet(

@@ -24,11 +24,11 @@ class ProductoController extends GetxController {
   final Rx<dynamic> _precioProducto = "".obs;
   String get precioProducto => _precioProducto.value;
 
-  Future<void> consultaMesas() async {
+  Future<void> consultaProductos() async {
     _productoFirestore.value = await PeticionesProducto.consultarGral();
   }
 
-  Future<void> consultaMesa(String id) async {
+  Future<void> consultaProducto(String id) async {
     List<Producto> lista = await PeticionesProducto.consultarGral();
 
     for (var producto in lista) {

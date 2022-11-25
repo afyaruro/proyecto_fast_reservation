@@ -70,7 +70,7 @@ class Login extends StatelessWidget {
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
                   decoration: InputDecoration(
-                    labelText: 'User Name',
+                    labelText: 'Nombre de Usuario',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),
@@ -85,7 +85,7 @@ class Login extends StatelessWidget {
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'Contraseña',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                   ),

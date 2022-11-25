@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controller/ControlProducto.dart';
+import '../../../../Controller/ControlProducto.dart';
 
 class ConsultaProducto extends StatefulWidget {
   ConsultaProducto({Key? key}) : super(key: key);

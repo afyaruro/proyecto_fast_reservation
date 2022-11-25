@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:proyecto_fast_reservation/Controller/ControlFirebaseMesas.dart';
+import 'package:proyecto_fast_reservation/Controller/controlMesero.dart';
+import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaMesero.dart';
 import 'dart:io';
-import 'package:proyecto_fast_reservation/Data/Service/PeticionesMesas.dart';
-import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaMesa.dart';
-
-import '../../domain/models/mesa.dart';
 
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class GestionarMesas extends StatefulWidget {
-  const GestionarMesas({Key? key}) : super(key: key);
+class GestionarMeseros extends StatefulWidget {
+  GestionarMeseros({Key? key}) : super(key: key);
 
   @override
-  State<GestionarMesas> createState() => _GestionarMesasState();
+  State<GestionarMeseros> createState() => _GestionarMeserosState();
 }
 
-class _GestionarMesasState extends State<GestionarMesas> {
+class _GestionarMeserosState extends State<GestionarMeseros> {
   var _image;
   ImagePicker picker = ImagePicker();
-  TextEditingController controlIdMesa = TextEditingController();
-  TextEditingController controlNombreMesa = TextEditingController();
-  TextEditingController controlDescripcion = TextEditingController();
-  MesaController controlMesa = Get.find();
+  TextEditingController controlUserName = TextEditingController();
+  TextEditingController controlPassword = TextEditingController();
+  TextEditingController controlTelefono = TextEditingController();
+  TextEditingController controlSalario = TextEditingController();
+  TextEditingController controlNombre = TextEditingController();
+  final RespuestaMesero respuesta = RespuestaMesero();
+
+  MeseroController controlProducto = Get.find();
   String mensaje = "";
-  final RespuestaMesa respuesta = RespuestaMesa();
 
   _camGaleria(bool op) async {
     XFile? image;
     image = op
         ? await picker.pickImage(source: ImageSource.camera, imageQuality: 50)
         : await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
     setState(() {
       _image = (image != null) ? File(image.path) : null;
     });
@@ -43,7 +42,7 @@ class _GestionarMesasState extends State<GestionarMesas> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Gestionar Mesas"),
+        title: const Text("Gestionar Productos"),
         backgroundColor: const Color(0xFF005E80),
       ),
       body: Container(
@@ -94,9 +93,9 @@ class _GestionarMesasState extends State<GestionarMesas> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlIdMesa,
+                controller: controlUserName,
                 decoration: InputDecoration(
-                  labelText: 'Id de la Mesa',
+                  labelText: 'Nombre de Usuario',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -109,9 +108,9 @@ class _GestionarMesasState extends State<GestionarMesas> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlNombreMesa,
+                controller: controlPassword,
                 decoration: InputDecoration(
-                  labelText: 'Nombre de la Mesa',
+                  labelText: 'Contraseña',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -124,9 +123,10 @@ class _GestionarMesasState extends State<GestionarMesas> {
             Container(
               margin: EdgeInsets.only(right: 20.0, left: 20.0),
               child: TextField(
-                controller: controlDescripcion,
+                controller: controlNombre,
+                //keyboardType: TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  labelText: 'Descripcion de la Mesa',
+                  labelText: 'Nombres y Apellidos',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),
@@ -134,7 +134,37 @@ class _GestionarMesasState extends State<GestionarMesas> {
             ),
             SizedBox(
               width: 20,
-              height: 20,
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 20.0, left: 20.0),
+              child: TextField(
+                controller: controlTelefono,
+                decoration: InputDecoration(
+                  labelText: 'Telefono',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 20.0, left: 20.0),
+              child: TextField(
+                controller: controlSalario,
+                decoration: InputDecoration(
+                  labelText: 'Salario',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+              height: 50,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -146,9 +176,11 @@ class _GestionarMesasState extends State<GestionarMesas> {
                       child: IconButton(
                         onPressed: () async {
                           respuesta.RespuestaAdd(
-                              controlIdMesa.text,
-                              controlNombreMesa.text,
-                              controlDescripcion.text,
+                              controlUserName.text,
+                              controlPassword.text,
+                              controlNombre.text,
+                              controlTelefono.text,
+                              controlSalario.text,
                               _image);
                         },
                         icon: Icon(Icons.add),
@@ -161,10 +193,12 @@ class _GestionarMesasState extends State<GestionarMesas> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaActualizar(
-                              controlIdMesa.text,
-                              controlNombreMesa.text,
-                              controlDescripcion.text,
+                          respuesta.RespuestaModificar(
+                              controlUserName.text,
+                              controlPassword.text,
+                              controlNombre.text,
+                              controlTelefono.text,
+                              controlSalario.text,
                               _image);
                         },
                         icon: Icon(Icons.create_rounded),
@@ -177,8 +211,8 @@ class _GestionarMesasState extends State<GestionarMesas> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaConsultarxId(
-                              controlIdMesa.text, controlMesa);
+                          respuesta.RespuestaBusquedaxId(
+                              controlUserName.text, controlProducto);
                         },
                         icon: Icon(Icons.search),
                         color: Colors.white,
@@ -190,7 +224,7 @@ class _GestionarMesasState extends State<GestionarMesas> {
                       backgroundColor: Color(0xFF005E80),
                       child: IconButton(
                         onPressed: () async {
-                          respuesta.RespuestaDelete(controlIdMesa.text);
+                          respuesta.RespuestaDelete(controlUserName.text);
                         },
                         icon: Icon(Icons.delete),
                         color: Colors.white,
@@ -207,8 +241,6 @@ class _GestionarMesasState extends State<GestionarMesas> {
       ),
     );
   }
-
-//Seleccionar la camara o la galeria
 
   void _opcioncamara(context) {
     showModalBottomSheet(

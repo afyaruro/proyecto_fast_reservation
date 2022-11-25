@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:proyecto_fast_reservation/Controller/ControlProducto.dart';
+import 'package:proyecto_fast_reservation/Data/Service/PeticionesMeseros.dart';
 import 'package:proyecto_fast_reservation/Data/Service/PeticionesProducto.dart';
 
+import '../../Controller/controlMesero.dart';
+import '../../domain/models/mesero.dart';
 import '../../domain/models/producto.dart';
 
-class RespuestaProducto {
+class RespuestaMesero {
   String mensaje = "";
 
-  RespuestaAdd(String id, String descripcion, String nombre, String precio,
-      var _image) async {
-    if (id == "" || nombre == "" || descripcion == "" || precio == "") {
+  RespuestaAdd(String id, String password, String nombre, String telefono,
+      String salario, var _image) async {
+    if (id == "" ||
+        password == "" ||
+        nombre == "" ||
+        telefono == "" ||
+        salario == "") {
       Get.showSnackbar(const GetSnackBar(
         title: 'Error',
         message: "Error: Campos Vacios por favor llenarlos todos",
@@ -22,14 +28,14 @@ class RespuestaProducto {
         backgroundColor: Color.fromARGB(150, 0, 94, 128),
       ));
     } else {
-      List<Producto> lista = await PeticionesProducto.consultarGral();
+      List<Mesero> lista = await PeticionesMesero.consultarGral();
       this.mensaje = "";
-      for (var producto in lista) {
-        if (producto.idProducto == id) {
+      for (var mesero in lista) {
+        if (mesero.userName == id) {
           Get.showSnackbar(const GetSnackBar(
             title: 'Error',
             message:
-                "Error: Ya un producto ya se encuentra registrado con el id",
+                "Error: Ya un mesero ya se encuentra registrado con el nombre de usuario",
             icon: Icon(
               Icons.error,
               color: Color.fromARGB(255, 187, 2, 2),
@@ -43,17 +49,19 @@ class RespuestaProducto {
 
       if (mensaje != "Encontrada") {
         var catalogo = <String, dynamic>{
-          'idProducto': id,
-          'nombreProducto': nombre,
-          'descripcionProducto': descripcion,
-          'precioProducto': precio,
+          'userName': id,
+          'password': password,
+          'nombreApellido': nombre,
+          'telefono': telefono,
+          'tipoUser': 'Mesero',
+          'salario': salario,
           'foto': ''
         };
 
-        PeticionesProducto.crearProducto(catalogo, _image);
+        PeticionesMesero.crearMesero(catalogo, _image);
         Get.showSnackbar(const GetSnackBar(
-          title: 'Creación Producto',
-          message: 'Producto creado correctamente',
+          title: 'Creación Mesero',
+          message: 'Mesero creado correctamente',
           icon: Icon(
             Icons.beenhere,
             color: Colors.lime,
@@ -65,9 +73,13 @@ class RespuestaProducto {
     }
   }
 
-  RespuestaModificar(String id, String descripcion, String nombre,
-      String precio, var _imagen) async {
-    if (id == "" || descripcion == "" || nombre == "" || precio == "") {
+  RespuestaModificar(String userName, String password, String nombre,
+      String telefono, String salario, var _image) async {
+    if (userName == "" ||
+        password == "" ||
+        nombre == "" ||
+        telefono == "" ||
+        salario == "") {
       Get.showSnackbar(const GetSnackBar(
         title: 'Error',
         message: "Error: Campos Vacios por favor llenarlos todos",
@@ -79,22 +91,24 @@ class RespuestaProducto {
         backgroundColor: Color.fromARGB(150, 0, 94, 128),
       ));
     } else {
-      List<Producto> lista = await PeticionesProducto.consultarGral();
+      List<Mesero> lista = await PeticionesMesero.consultarGral();
       this.mensaje = "";
-      for (var producto in lista) {
-        if (producto.idProducto == id) {
+      for (var mesero in lista) {
+        if (mesero.userName == userName) {
           var catalogo = <String, dynamic>{
-            'idProducto': id,
-            'nombreProducto': nombre,
-            'descripcionProducto': descripcion,
-            'precioProducto': precio,
+            'userName': userName,
+            'password': password,
+            'nombreApellido': nombre,
+            'telefono': telefono,
+            'tipoUser': 'Mesero',
+            'salario': salario,
             'foto': ''
           };
 
-          PeticionesProducto.actualizarProducto(id, catalogo, _imagen);
+          PeticionesMesero.actualizarMesero(userName, catalogo, _image);
           Get.showSnackbar(const GetSnackBar(
-            title: 'Actualización Producto',
-            message: 'Producto actualizado correctamente',
+            title: 'Actualización Mesero',
+            message: 'Mesero actualizado correctamente',
             icon: Icon(
               Icons.beenhere,
               color: Colors.lime,
@@ -109,7 +123,7 @@ class RespuestaProducto {
       if (mensaje != "Encontrada") {
         Get.showSnackbar(const GetSnackBar(
           title: 'Error',
-          message: "Error: El producto NO EXISTE",
+          message: "Error: El mesero NO EXISTE",
           icon: Icon(
             Icons.error,
             color: Color.fromARGB(255, 187, 2, 2),
@@ -121,11 +135,11 @@ class RespuestaProducto {
     }
   }
 
-  RespuestaDelete(String id) async {
-    if (id == "") {
+  RespuestaDelete(String userName) async {
+    if (userName == "") {
       Get.showSnackbar(const GetSnackBar(
         title: 'Error',
-        message: "Error: Campos de Id Producto vacio, por favor llenarlo",
+        message: "Error: Campos de nombre de usuario vacio, por favor llenarlo",
         icon: Icon(
           Icons.error,
           color: Color.fromARGB(255, 187, 2, 2),
@@ -134,15 +148,15 @@ class RespuestaProducto {
         backgroundColor: Color.fromARGB(150, 0, 94, 128),
       ));
     } else {
-      List<Producto> lista = await PeticionesProducto.consultarGral();
+      List<Mesero> lista = await PeticionesMesero.consultarGral();
       this.mensaje = "";
-      for (var producto in lista) {
-        if (producto.idProducto == id) {
+      for (var mesero in lista) {
+        if (mesero.userName == userName) {
           this.mensaje = "Encontrada";
-          PeticionesProducto.eliminarProducto(id);
+          PeticionesMesero.eliminarMesero(userName);
           Get.showSnackbar(const GetSnackBar(
-            title: 'Producto Eliminado',
-            message: 'Producto eliminado correctamente',
+            title: 'Mesero Eliminado',
+            message: 'Mesero eliminado correctamente',
             icon: Icon(
               Icons.beenhere,
               color: Colors.lime,
@@ -156,7 +170,7 @@ class RespuestaProducto {
       if (mensaje != "Encontrada") {
         Get.showSnackbar(const GetSnackBar(
           title: 'Error',
-          message: "Error: NO EXISTE un producto con el id",
+          message: "Error: NO EXISTE un mesero con el nombre de usuario",
           icon: Icon(
             Icons.error,
             color: Color.fromARGB(255, 187, 2, 2),
@@ -168,12 +182,12 @@ class RespuestaProducto {
     }
   }
 
-  RespuestaBusquedaxId(String id, ProductoController controlProducto) async {
-    controlProducto.consultaProducto(id);
-    if (id == "") {
+  RespuestaBusquedaxId(String username, MeseroController control) async {
+    control.consultaMesero(username);
+    if (username == "") {
       Get.showSnackbar(const GetSnackBar(
         title: 'Error',
-        message: "Error: Campos de Id Producto vacio por favor llenarlo",
+        message: "Error: Campos nombre de usuario vacio por favor llenarlo",
         icon: Icon(
           Icons.error,
           color: Color.fromARGB(255, 187, 2, 2),
@@ -182,15 +196,15 @@ class RespuestaProducto {
         backgroundColor: Color.fromARGB(150, 0, 94, 128),
       ));
     } else {
-      List<Producto> lista = await PeticionesProducto.consultarGral();
+      List<Mesero> lista = await PeticionesMesero.consultarGral();
       this.mensaje = "";
-      for (var producto in lista) {
-        if (producto.idProducto == id) {
+      for (var mesero in lista) {
+        if (mesero.userName == username) {
           this.mensaje = "Encontrada";
           Get.toNamed('/consultaProducto');
           Get.showSnackbar(const GetSnackBar(
-            title: 'Consulta Producto',
-            message: 'Producto encontrado correctamente',
+            title: 'Consulta Mesero',
+            message: 'Mesero encontrado correctamente',
             icon: Icon(
               Icons.beenhere,
               color: Colors.lime,
@@ -204,7 +218,7 @@ class RespuestaProducto {
       if (mensaje != "Encontrada") {
         Get.showSnackbar(const GetSnackBar(
           title: 'Error',
-          message: "Error: NO EXISTE un producto con el id",
+          message: "Error: NO EXISTE un Mesero con el nombre de usuario",
           icon: Icon(
             Icons.error,
             color: Color.fromARGB(255, 187, 2, 2),

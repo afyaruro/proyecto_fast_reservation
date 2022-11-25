@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:proyecto_fast_reservation/UI/Respuestas/RespuestaCliente.dart';
+
+import '../../Controller/controlCliente.dart';
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class Registro extends StatelessWidget {
-  const Registro({Key? key}) : super(key: key);
+  Registro({Key? key}) : super(key: key);
+
+  TextEditingController controlNameUser = TextEditingController();
+  TextEditingController controlPassword = TextEditingController();
+  TextEditingController controlNombreApellido = TextEditingController();
+  TextEditingController controlTelefono = TextEditingController();
+  ClienteController controlCliente = Get.find();
+  final RespuestaCliente respuesta = RespuestaCliente();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +81,7 @@ class Registro extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlNameUser,
                   decoration: InputDecoration(
                     labelText: 'Nombre de Usuario',
                     border: OutlineInputBorder(
@@ -84,6 +96,7 @@ class Registro extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlPassword,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Contraseña',
@@ -99,6 +112,7 @@ class Registro extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlNombreApellido,
                   decoration: InputDecoration(
                     labelText: 'Nombre y Apellido',
                     border: OutlineInputBorder(
@@ -113,6 +127,7 @@ class Registro extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlTelefono,
                   decoration: InputDecoration(
                     labelText: 'Telefono',
                     border: OutlineInputBorder(
@@ -135,7 +150,14 @@ class Registro extends StatelessWidget {
                         Color(0xFF00BBFF),
                       ])),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      respuesta.RespuestaAdd(
+                          controlNameUser.text,
+                          controlPassword.text,
+                          controlNombreApellido.text,
+                          controlTelefono.text,
+                          controlCliente);
+                    },
                     child: Text("Registrarse",
                         style: TextStyle(color: Colors.white, fontSize: 15)),
                   )),
