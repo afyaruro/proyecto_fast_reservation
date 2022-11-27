@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_fast_reservation/UI/pages/Administrador/Consultas/ConsultaMeseros.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Cliente/ClienteReservar.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/Consultas/ConsultarMesa.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/Consultas/ConsultarProducto.dart';
@@ -8,6 +9,7 @@ import 'package:proyecto_fast_reservation/UI/pages/Administrador/GestionarProduc
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/InicioAdmin.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Cliente/InicioCliente.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Login.dart';
+import 'package:proyecto_fast_reservation/UI/pages/Mesero/MesaPedido.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Registro.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         '/consultaProducto': (context) => ConsultaProducto(),
         '/inicioCliente': (context) => InicioCliente(),
         '/ClienteReserva': (context) => ClienteReserva(),
+        '/consultaMesero': (context) => ConsultaMesero(),
+        '/mesaPedido': (context) => MesaPedido(),
       },
     );
   }

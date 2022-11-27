@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:proyecto_fast_reservation/UI/Respuestas/loginRespuesta.dart';
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final RespuestaLogin respuesta = RespuestaLogin();
+  TextEditingController controlPassword = TextEditingController();
+  TextEditingController controlUserName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +79,7 @@ class Login extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlUserName,
                   decoration: InputDecoration(
                     labelText: 'Nombre de Usuario',
                     border: OutlineInputBorder(
@@ -83,6 +94,7 @@ class Login extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 20.0, left: 20.0),
                 child: TextField(
+                  controller: controlPassword,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Contraseña',
@@ -107,7 +119,9 @@ class Login extends StatelessWidget {
                       ])),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/inicioAdmin');
+                      // Navigator.pushNamed(context, '/inicioAdmin');
+                      respuesta.Logeo(
+                          controlUserName.text, controlPassword.text);
                     },
                     child: Text("Ingresar",
                         style: TextStyle(color: Colors.white, fontSize: 15)),

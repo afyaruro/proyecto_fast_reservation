@@ -11,6 +11,19 @@ class ConsultarProductos extends StatefulWidget {
 }
 
 class _ConsultarProductosState extends State<ConsultarProductos> {
+  var _image;
+
+  String LLamarImagen(ProductoController control, int posicion) {
+    if (control.getproductosGral![posicion].foto == "") {
+      _image =
+          "https://farm5.staticflickr.com/4363/36346283311_74018f6e7d_o.png";
+    } else {
+      _image = control.getproductosGral![posicion].foto;
+    }
+
+    return _image;
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductoController controladorProducto = Get.find();
@@ -24,25 +37,24 @@ class _ConsultarProductosState extends State<ConsultarProductos> {
                     : controladorProducto.getproductosGral!.length,
                 itemBuilder: (context, posicion) {
                   return ListTile(
-                    leading: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 50,
-                      height: 50,
-                      child: controladorProducto
-                                  .getproductosGral![posicion].foto !=
-                              ''
-                          ? Image.network(controladorProducto
-                              .getproductosGral![posicion].foto)
-                          : const Icon(Icons.photo),
+                    leading: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage: NetworkImage(
+                        LLamarImagen(controladorProducto, posicion),
+                      ),
+                      backgroundColor: Colors.transparent,
                     ),
-                    title: Text(controladorProducto
-                        .getproductosGral![posicion].nombreProducto),
+                    title: Text(
+                      controladorProducto
+                          .getproductosGral![posicion].nombreProducto,
+                      style: TextStyle(color: Colors.amber),
+                    ),
                     subtitle: Text(controladorProducto
                         .getproductosGral![posicion].descripcionProducto),
                     trailing: Container(
                       width: 80,
                       height: 40,
-                      color: Color(0xFF3CB3DF),
+                      color: Colors.transparent,
                       child: Center(
                         child: Text(
                           controladorProducto

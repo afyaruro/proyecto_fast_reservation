@@ -201,7 +201,7 @@ class RespuestaMesero {
       for (var mesero in lista) {
         if (mesero.userName == username) {
           this.mensaje = "Encontrada";
-          Get.toNamed('/consultaProducto');
+          Get.toNamed('/consultaMesero');
           Get.showSnackbar(const GetSnackBar(
             title: 'Consulta Mesero',
             message: 'Mesero encontrado correctamente',
