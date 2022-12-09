@@ -14,6 +14,7 @@ class _LoginState extends State<Login> {
   final RespuestaLogin respuesta = RespuestaLogin();
   TextEditingController controlPassword = TextEditingController();
   TextEditingController controlUserName = TextEditingController();
+  bool load = false;
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +119,14 @@ class _LoginState extends State<Login> {
                         Color(0xFF00BBFF),
                       ])),
                   child: TextButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/inicioAdmin');
-                      respuesta.Logeo(
-                          controlUserName.text, controlPassword.text);
+                    onPressed: () async {
+                      load = true;
+                      load = await respuesta.Logeo(
+                        controlUserName.text,
+                        controlPassword.text,
+                      );
+
+                      setState(() {});
                     },
                     child: Text("Ingresar",
                         style: TextStyle(color: Colors.white, fontSize: 15)),
@@ -129,6 +134,12 @@ class _LoginState extends State<Login> {
               SizedBox(
                 width: 20,
                 height: 50,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 165, right: 165),
+                height: 30.0,
+                width: 30.0,
+                child: load == true ? CircularProgressIndicator() : Text(""),
               ),
             ],
           )),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/InicioAdmin.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Login.dart';
+import 'package:proyecto_fast_reservation/UI/pages/Mesero/Cuenta.dart';
 
 import '../ConsultaGenerales/ConsultarProductos.dart';
 import 'PerfilCliente.dart';
@@ -17,7 +18,7 @@ class _ClienteReservaState extends State<ClienteReserva> {
   @override
   int index = 0;
   final List<Widget> Ruta = [
-    Login(),
+    CuentaxMesa(),
     PerfilCliente(),
     ConsultarProductos(),
     Login()

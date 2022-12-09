@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_fast_reservation/Controller/controlCliente.dart';
+import 'package:proyecto_fast_reservation/Controller/controlCuenta.dart';
 import 'package:proyecto_fast_reservation/Controller/controlMesero.dart';
 import 'package:proyecto_fast_reservation/UI/app.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,7 @@ void main() async {
   Get.put(ProductoController());
   Get.put(ClienteController());
   Get.put(MeseroController());
+  Get.put(CuentaController());
 
   runApp(const MyApp());
 }

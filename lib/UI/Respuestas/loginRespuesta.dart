@@ -13,7 +13,7 @@ class RespuestaLogin {
   ClienteController controlCliente = Get.find();
   MeseroController controlMesero = Get.find();
 
-  Logeo(String userName, String password) async {
+  Future<bool> Logeo(String userName, String password) async {
     List<Usuario> listaUser = [];
 
     mensaje = "";
@@ -77,6 +77,7 @@ class RespuestaLogin {
           backgroundColor: Color.fromARGB(150, 0, 94, 128),
         ));
         mensaje = "Encontrado";
+        return true;
       }
     }
 
@@ -91,6 +92,9 @@ class RespuestaLogin {
         duration: Duration(seconds: 2),
         backgroundColor: Color.fromARGB(150, 0, 94, 128),
       ));
+      return false;
     }
+
+    return true;
   }
 }

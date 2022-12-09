@@ -8,7 +8,10 @@ import 'package:proyecto_fast_reservation/UI/pages/Administrador/GestionarMesero
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/GestionarProductos.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Administrador/InicioAdmin.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Cliente/InicioCliente.dart';
+import 'package:proyecto_fast_reservation/UI/pages/ConsultaGenerales/Nueva.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Login.dart';
+import 'package:proyecto_fast_reservation/UI/pages/Mesero/Cuenta.dart';
+import 'package:proyecto_fast_reservation/UI/pages/Mesero/ListaProducto.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Mesero/MesaPedido.dart';
 import 'package:proyecto_fast_reservation/UI/pages/Registro.dart';
 import 'package:get/get.dart';
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //home: AdicionarArticulos(),
       home: Login(),
+      //home: prueba(),
       routes: {
         '/login': (context) => Login(),
         '/registro': (context) => Registro(),
@@ -38,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/ClienteReserva': (context) => ClienteReserva(),
         '/consultaMesero': (context) => ConsultaMesero(),
         '/mesaPedido': (context) => MesaPedido(),
+        '/cuentaMesa': (context) => CuentaxMesa(),
+        '/listaProducto': (context) => ListaProductos(),
       },
     );
   }
